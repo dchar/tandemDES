@@ -226,10 +226,14 @@ void queue1_departure(void)
         delay            = sim_time - time_arrival[1];
         total_of_delays += delay;
 
-		/* Increment number of customers delayed and schedule queue 2 arrival */
+		/* Increment number of customers delayed */
 		++num_custs_delayed;
 		server_status[0] = BUSY;
-		time_next_event[4] = sim_time + expon(mean_service[0]);
+
+		/* Schedule departure from queue 1 and arrival at queue 2 */
+		float service_time = expon(mean_service[0]);
+		time_next_event[3] = sim_time + service_time;
+		time_next_event[4] = sim_time + service_time;
 
         /* Move each customer in queue (if any) up one place. */
         for (i = 1; i <= num_in_q[0]; ++i)
@@ -307,7 +311,9 @@ void system_departure(void)  /* Departure event function. */
 
         /* Increment the number of customers delayed, and schedule departure. */
         ++num_custs_delayed;
-		server_status[1] = BUSY;
+
+		/* Make server busy and schedule departure */
+		server_status[1]   = BUSY;
         time_next_event[2] = sim_time + expon(mean_service[1]);
 
         /* Move each customer in queue (if any) up one place. */

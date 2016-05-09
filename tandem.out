@@ -10,141 +10,18 @@ Length of the simulation        2000.000 minutes
 
 
 
-Average delay in queue      0.278 minutes
+Average delay in queue     10.824 minutes
 
-Average number in queue 1:     0.488
+Average number in queue 1:    25.481
 
-Average number in queue 2:     0.213
+Average number in queue 2:     0.004
 
-SRVR1 utilization          0.502
+SRVR1 utilization          0.986
 
-SRVR2 utilization          0.462
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.268 minutes
-
-Average number in queue 1:     0.475
-
-Average number in queue 2:     0.195
-
-SRVR1 utilization          0.492
-
-SRVR2 utilization          0.461
+SRVR2 utilization          0.016
 
 Time simulation ended    2000.000 minutes
 
 
-
-Average delay in queue      0.257 minutes
-
-Average number in queue 1:     0.474
-
-Average number in queue 2:     0.163
-
-SRVR1 utilization          0.505
-
-SRVR2 utilization          0.450
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.300 minutes
-
-Average number in queue 1:     0.511
-
-Average number in queue 2:     0.248
-
-SRVR1 utilization          0.513
-
-SRVR2 utilization          0.496
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.272 minutes
-
-Average number in queue 1:     0.457
-
-Average number in queue 2:     0.217
-
-SRVR1 utilization          0.498
-
-SRVR2 utilization          0.461
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.321 minutes
-
-Average number in queue 1:     0.495
-
-Average number in queue 2:     0.323
-
-SRVR1 utilization          0.500
-
-SRVR2 utilization          0.512
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.288 minutes
-
-Average number in queue 1:     0.479
-
-Average number in queue 2:     0.259
-
-SRVR1 utilization          0.495
-
-SRVR2 utilization          0.475
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.293 minutes
-
-Average number in queue 1:     0.473
-
-Average number in queue 2:     0.250
-
-SRVR1 utilization          0.495
-
-SRVR2 utilization          0.493
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.300 minutes
-
-Average number in queue 1:     0.503
-
-Average number in queue 2:     0.250
-
-SRVR1 utilization          0.506
-
-SRVR2 utilization          0.491
-
-Time simulation ended    2000.000 minutes
-
-
-
-Average delay in queue      0.283 minutes
-
-Average number in queue 1:     0.516
-
-Average number in queue 2:     0.211
-
-SRVR1 utilization          0.504
-
-SRVR2 utilization          0.475
-
-Time simulation ended    2000.000 minutes
+Overflow of the first array time_arrival at time 730.002808 
 
