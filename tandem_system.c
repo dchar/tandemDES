@@ -5,7 +5,7 @@
 #include <math.h>
 #include "lcgrand.h"  /* Header file for random-number generator. */
 
-#define Q_LIMIT 2000  /* Limit on queue length. */
+#define Q_LIMIT 100  /* Limit on queue length. */
 #define BUSY      1  /* Mnemonics for server's being busy */
 #define IDLE      0  /* and idle. */
 
@@ -53,35 +53,29 @@ main()  /* Main function. */
     fprintf(outfile, "Length of the simulation%16.3f minutes\n\n", time_end);
 
 	int i;
+
+	/* Run simulation ten times total */
 	for (i = 0; i < 10; i++) {
-    /* Initialize the simulation. */
+      /* Initialize the simulation. */
 	
       initialize();
 
-    /* Run the simulation while more delays are still needed. */
+      /* Run the simulation until the end time is reached */
       do {
         /* Determine the next event. */
-
         timing();
 
         /* Update time-average statistical accumulators. */
-
         update_time_avg_stats();
 
-        /* Invoke the appropriate event function. */
-
-
-
-    	fprintf(debugfile, "\n#Q1:%d   #Q2:%d\n",
+		/* FIXME log loop information to debug file */
+		fprintf(debugfile, "\nCALL:%d    TIME:%f\n", next_event_type, sim_time);
+    	fprintf(debugfile, "#Q1 :%d    #Q2 :%d\n",
             num_in_q[0], num_in_q[1]);
-    	fprintf(debugfile, "SRV1 %d    SRV2:%d\n",
+    	fprintf(debugfile, "SRV1:%d    SRV2:%d\n",
             server_status[0], server_status[1]);
-    	fprintf(debugfile, "SRV1 %f    SRV2:%f\n",
-            mean_service[0], mean_service[1]);
-		fprintf(debugfile, "SIMTIME: %f\n", sim_time);
-		
 
-
+        /* Invoke the appropriate event function. */
         switch (next_event_type) 
         {
             case 1:
@@ -100,11 +94,8 @@ main()  /* Main function. */
 				report();
 				break;
         }
-	
-	/* If the event just executed was not the end-simulation event, then continue */
-
+	  /* If the event just executed was not the end-simulation event, then continue */
 	  } while (next_event_type != 5);
-
 	}
 
     fclose(infile);
@@ -119,11 +110,9 @@ void initialize(void)  /* Initialization function. */
 	int i;
 
     /* Initialize the simulation clock. */
-
     sim_time = 0.0;
 
     /* Initialize the state variables and statistical counters. */
-
 	for (i = 0; i < 2; i++) {
 		server_status[i]      = IDLE;		
 		num_in_q[i]           = 0;
@@ -176,7 +165,6 @@ void timing(void)  /* Timing function. */
 void system_arrival(void)  /* Arrive in the system (queue one) */
 {
     float delay;
-	fprintf(debugfile, "system_arrival\n num_in1: %d\n", num_in_q[0]);
 
     /* Schedule next arrival. */
     time_next_event[1] = sim_time + expon(mean_interarrival);
@@ -200,9 +188,7 @@ void system_arrival(void)  /* Arrive in the system (queue one) */
     }
 
     else {
-        /* Server is idle, so arriving customer has a delay of zero.  (The
-           following two statements are for program clarity and do not affect
-           the results of the simulation.) */
+        /* Server is idle, so arriving customer has a delay of zero.*/
         delay            = 0.0;
         total_of_delays += delay;
 
@@ -223,11 +209,10 @@ void queue1_departure(void)
 {
 	int i;
 	float delay;
-	fprintf(debugfile, "q1 departure\n num_in1: %d\n", num_in_q[0]);
+
 	/* Check to see whether the first queue is empty */
 	if (num_in_q[0] == 0) {
-		/* The first queue is empty so make the server idle and eliminate
-		   the tandem event from consideration. */
+		/* The first queue is empty so make the server idle */
 		server_status[0]   = IDLE;
 		time_next_event[3] = 1.0e+30;
 	}
@@ -241,19 +226,17 @@ void queue1_departure(void)
         delay            = sim_time - time_arrival[1];
         total_of_delays += delay;
 
-		/* Increment the number of customers delayed and schedule the next
-		 *	departure from queue one */
+		/* Increment number of customers delayed and schedule queue 2 arrival */
 		++num_custs_delayed;
 		server_status[0] = BUSY;
 		time_next_event[4] = sim_time + expon(mean_service[0]);
 
-		fprintf(stdout, "SIMTIME: %f\n", sim_time);
-		fprintf(stdout, "MEANSRV[0]: %f\n", mean_service[0]);
-		fprintf(stdout, "SCHEDULING Q2 ARRIVAL time: %f\n", time_next_event[4]);
-		fprintf(debugfile, "SCHEDULING Q2 ARRIVAL time: %f\n", time_next_event[4]);
         /* Move each customer in queue (if any) up one place. */
         for (i = 1; i <= num_in_q[0]; ++i)
             time_arrival[i] = time_arrival[i + 1];
+
+		/* FIXME logging to debug file */		
+		fprintf(debugfile, "SCHEDULING 4 | time:%f\n", time_next_event[4]);		
 	}
 
 }
@@ -262,7 +245,9 @@ void queue2_arrival(void) /* Arrive at the second queue */
 {
 	float delay;
 
-	fprintf(debugfile, "queue2_arrival \n num_in2: %d\n", num_in_q[1]);
+	/* Wait for the next arrival afterward*/
+	time_next_event[4] = 1.0e+30;
+
 	/* Check to see whether the second server is busy. */
 	if (server_status[1] == BUSY) {
 		/* Second server is busy, so increment the number of customers in
@@ -291,7 +276,9 @@ void queue2_arrival(void) /* Arrive at the second queue */
 
 		/* Schedule system departure for the current customer*/
 		time_next_event[2] = sim_time + expon(mean_service[1]);
-		fprintf(debugfile, "SCHEDULING A DEPARTURE time: %f\n", time_next_event[2]);
+
+		/* FIXME logging to debug file */
+		fprintf(debugfile, "SCHEDULING 2 | time:%f\n", time_next_event[2]);
 	}
 }
 
@@ -299,7 +286,7 @@ void system_departure(void)  /* Departure event function. */
 {
     int   i;
     float delay;
-	fprintf(debugfile, "SYSTEM_DEPARTURE\n num_in2: %d\n", num_in_q[1]);
+
     /* Check to see whether the queue is empty. */
     if (num_in_q[1] == 0) {
         /* The queue is empty so make the server idle and eliminate the
