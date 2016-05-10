@@ -5,9 +5,9 @@
 #include <math.h>
 #include "lcgrand.h"  /* Header file for random-number generator. */
 
-#define Q_LIMIT 100  /* Limit on queue length. */
-#define BUSY      1  /* Mnemonics for server's being busy */
-#define IDLE      0  /* and idle. */
+#define Q_LIMIT 2500  /* Limit on queue length. */
+#define BUSY       1  /* Mnemonics for server's being busy */
+#define IDLE       0  /* and idle. */
 
 int   next_event_type, num_custs_delayed, num_events, num_in_q[2], server_status[2];
 float area_num_in_q[2], area_server_status[2], mean_interarrival, mean_service[2],
@@ -17,10 +17,10 @@ FILE  *infile, *outfile, *debugfile;
 
 void  initialize(void);
 void  timing(void);
-void  system_arrival(void);
+void  queue1_arrival(void);
 void  queue1_departure(void);
 void  queue2_arrival(void);
-void  system_departure(void);
+void  queue2_departure(void);
 void  report(void);
 void  update_time_avg_stats(void);
 float expon(float mean);
@@ -79,16 +79,16 @@ main()  /* Main function. */
         switch (next_event_type) 
         {
             case 1:
-                system_arrival();
+                queue1_arrival();
                 break;
             case 2:
-                system_departure();
-                break;
-            case 3:
                 queue1_departure();
                 break;
-            case 4:
+            case 3:
                 queue2_arrival();
+                break;
+            case 4:
+                queue2_departure();
                 break;
             case 5:
                 report();
@@ -162,7 +162,7 @@ void timing(void)  /* Timing function. */
 }
 
 
-void system_arrival(void)  /* Arrive in the system (queue one) */
+void queue1_arrival(void)  /* Arrive in the system (queue one) */
 {
     float delay;
 
@@ -196,8 +196,8 @@ void system_arrival(void)  /* Arrive in the system (queue one) */
         ++num_custs_delayed;
         server_status[0] = BUSY;
 
-        /* Schedule arrival in second queue */
-        time_next_event[3] = sim_time + expon(mean_service[0]);
+        /* Schedule arrival at the second queue */
+        time_next_event[2] = sim_time + expon(mean_service[0]);
     }
 }
 
@@ -214,7 +214,7 @@ void queue1_departure(void)
 	if (num_in_q[0] == 0) {
 		/* The first queue is empty so make the server idle */
 		server_status[0]   = IDLE;
-		time_next_event[3] = 1.0e+30;
+		time_next_event[2] = 1.0e+30;
 	}
 	
 	/* Decrement the number of customers in the first queue. */
@@ -230,17 +230,16 @@ void queue1_departure(void)
 		++num_custs_delayed;
 		server_status[0] = BUSY;
 
-		/* Schedule departure from queue 1 and arrival at queue 2 */
-		float service_time = expon(mean_service[0]);
-		time_next_event[3] = sim_time + service_time;
-		time_next_event[4] = sim_time + service_time;
+		/* Schedule another queue 1 departure and arrival at queue 2 */
+		time_next_event[2] = sim_time + expon(mean_service[0]);
+		queue2_arrival();
 
         /* Move each customer in queue (if any) up one place. */
         for (i = 1; i <= num_in_q[0]; ++i)
             time_arrival[i] = time_arrival[i + 1];
 
 		/* FIXME logging to debug file */		
-		fprintf(debugfile, "SCHEDULING 4 | time:%f\n", time_next_event[4]);		
+		//fprintf(debugfile, "SCHEDULING 2 | time:%f\n", time_next_event[2]);		
 	}
 
 }
@@ -250,7 +249,7 @@ void queue2_arrival(void) /* Arrive at the second queue */
 	float delay;
 
 	/* Wait for the next arrival afterward*/
-	time_next_event[4] = 1.0e+30;
+	time_next_event[3] = 1.0e+30;
 
 	/* Check to see whether the second server is busy. */
 	if (server_status[1] == BUSY) {
@@ -279,14 +278,14 @@ void queue2_arrival(void) /* Arrive at the second queue */
 		server_status[1] = BUSY;
 
 		/* Schedule system departure for the current customer*/
-		time_next_event[2] = sim_time + expon(mean_service[1]);
+		time_next_event[4] = sim_time + expon(mean_service[1]);
 
 		/* FIXME logging to debug file */
-		fprintf(debugfile, "SCHEDULING 2 | time:%f\n", time_next_event[2]);
+		fprintf(debugfile, "SCHEDULING 4 | time:%f\n", time_next_event[4]);
 	}
 }
 
-void system_departure(void)  /* Departure event function. */
+void queue2_departure(void)  /* Departure event function. */
 {
     int   i;
     float delay;
@@ -296,7 +295,7 @@ void system_departure(void)  /* Departure event function. */
         /* The queue is empty so make the server idle and eliminate the
            departure (service completion) event from consideration. */
         server_status[1]      = IDLE;
-        time_next_event[2]    = 1.0e+30;
+        time_next_event[4]    = 1.0e+30;
     }
 
     else {
@@ -314,7 +313,7 @@ void system_departure(void)  /* Departure event function. */
 
 		/* Make server busy and schedule departure */
 		server_status[1]   = BUSY;
-        time_next_event[2] = sim_time + expon(mean_service[1]);
+        time_next_event[4] = sim_time + expon(mean_service[1]);
 
         /* Move each customer in queue (if any) up one place. */
         for (i = 1; i <= num_in_q[1]; ++i)
