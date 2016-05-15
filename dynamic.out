@@ -1,0 +1,190 @@
+Tandem-server queueing system
+
+Mean interarrival time      1.000 minutes
+
+SRVR1 mean service time           0.700 minutes
+
+SRVR2 mean service time           0.900 minutes
+
+Length of the simulation        1000.000 minutes
+
+
+
+Average delay in system:       7.223 minutes
+
+Average delays in queue 1:     1.524 minutes
+Average number in queue 1:     1.593 customers
+
+Average delays in queue 2:     5.699 minutes
+Average number in queue 2:     9.541 customers
+
+Average number in transit:     1.754 customers
+Maximum number in transit:     8.000 customers
+
+SERVER ONE utilization:     0.696
+SERVER TWO utilization:     0.869
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       7.988 minutes
+
+Average delays in queue 1:     1.000 minutes
+Average number in queue 1:     1.656 customers
+
+Average delays in queue 2:     6.987 minutes
+Average number in queue 2:    13.604 customers
+
+Average number in transit:     1.804 customers
+Maximum number in transit:    16.000 customers
+
+SERVER ONE utilization:     0.678
+SERVER TWO utilization:     0.917
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       8.934 minutes
+
+Average delays in queue 1:     0.861 minutes
+Average number in queue 1:     1.342 customers
+
+Average delays in queue 2:     8.073 minutes
+Average number in queue 2:    17.847 customers
+
+Average number in transit:     1.723 customers
+Maximum number in transit:    12.000 customers
+
+SERVER ONE utilization:     0.709
+SERVER TWO utilization:     0.941
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       2.322 minutes
+
+Average delays in queue 1:     0.782 minutes
+Average number in queue 1:     1.096 customers
+
+Average delays in queue 2:     1.540 minutes
+Average number in queue 2:     7.341 customers
+
+Average number in transit:     1.600 customers
+Maximum number in transit:    10.000 customers
+
+SERVER ONE utilization:     0.658
+SERVER TWO utilization:     0.762
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:      11.469 minutes
+
+Average delays in queue 1:     0.841 minutes
+Average number in queue 1:     1.406 customers
+
+Average delays in queue 2:    10.628 minutes
+Average number in queue 2:    24.668 customers
+
+Average number in transit:     1.764 customers
+Maximum number in transit:     9.000 customers
+
+SERVER ONE utilization:     0.726
+SERVER TWO utilization:     0.938
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:      15.816 minutes
+
+Average delays in queue 1:     1.388 minutes
+Average number in queue 1:     2.473 customers
+
+Average delays in queue 2:    14.428 minutes
+Average number in queue 2:    48.482 customers
+
+Average number in transit:     2.079 customers
+Maximum number in transit:    10.000 customers
+
+SERVER ONE utilization:     0.780
+SERVER TWO utilization:     0.974
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       6.725 minutes
+
+Average delays in queue 1:     1.120 minutes
+Average number in queue 1:     2.060 customers
+
+Average delays in queue 2:     5.605 minutes
+Average number in queue 2:    17.618 customers
+
+Average number in transit:     1.963 customers
+Maximum number in transit:     8.000 customers
+
+SERVER ONE utilization:     0.721
+SERVER TWO utilization:     0.930
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       4.753 minutes
+
+Average delays in queue 1:     0.949 minutes
+Average number in queue 1:     1.704 customers
+
+Average delays in queue 2:     3.804 minutes
+Average number in queue 2:    14.875 customers
+
+Average number in transit:     1.901 customers
+Maximum number in transit:    18.000 customers
+
+SERVER ONE utilization:     0.698
+SERVER TWO utilization:     0.869
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       4.921 minutes
+
+Average delays in queue 1:     1.097 minutes
+Average number in queue 1:     1.686 customers
+
+Average delays in queue 2:     3.825 minutes
+Average number in queue 2:    15.029 customers
+
+Average number in transit:     1.718 customers
+Maximum number in transit:     8.000 customers
+
+SERVER ONE utilization:     0.713
+SERVER TWO utilization:     0.939
+
+Simulation end time:        1000.000 minutes
+
+
+
+Average delay in system:       5.396 minutes
+
+Average delays in queue 1:     0.756 minutes
+Average number in queue 1:     1.301 customers
+
+Average delays in queue 2:     4.640 minutes
+Average number in queue 2:    20.237 customers
+
+Average number in transit:     1.699 customers
+Maximum number in transit:    10.000 customers
+
+SERVER ONE utilization:     0.695
+SERVER TWO utilization:     0.900
+
+Simulation end time:        1000.000 minutes
+
